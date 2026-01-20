@@ -5,61 +5,32 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { execSync } from "child_process";
 
-/* ---------------- ESM dirname ---------------- */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/* ---------------- Project Name ---------------- */
 const projectName = process.argv[2] || "amin-dashboard";
-const targetDir = path.join(process.cwd(), projectName);
-const templateDir = path.join(__dirname, "template");
 
-/* ---------------- Banner ---------------- */
-console.log(`
-========================================
- 🚀 AMIN DASHBOARD INSTALLER
-========================================
-Creating project: ${projectName}
-`);
+console.log("🚀 Creating:", projectName);
 
-/* ---------------- Validation ---------------- */
-if (fs.existsSync(targetDir)) {
-    console.error(`❌ Folder already exists: ${projectName}`);
+const templatePath = path.resolve(__dirname, "template");
+
+console.log("🔎 CLI location:", __dirname);
+console.log("📁 Template path:", templatePath);
+
+if (!fs.existsSync(templatePath)) {
+    console.error("❌ Template folder not found:", templatePath);
     process.exit(1);
 }
 
-if (!fs.existsSync(templateDir)) {
-    console.error("❌ Template folder not found:", templateDir);
-    process.exit(1);
-}
+fs.cpSync(templatePath, projectName, { recursive: true });
 
-/* ---------------- Copy Template ---------------- */
-fs.mkdirSync(targetDir, { recursive: true });
-fs.cpSync(templateDir, targetDir, { recursive: true });
-
-console.log("✔ Template copied");
-
-/* ---------------- Rename package.json ---------------- */
-const pkgPath = path.join(targetDir, "package.json");
-
-if (fs.existsSync(pkgPath)) {
-    const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
-    pkg.name = projectName;
-    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
-    console.log("✔ package.json updated");
-}
-
-/* ---------------- Install Dependencies ---------------- */
 console.log("📦 Installing dependencies...");
-try {
-    execSync("npm install", {
-        cwd: targetDir,
-        stdio: "inherit",
-    });
-} catch (err) {
-    console.error("❌ npm install failed");
-    process.exit(1);
-}
+
+execSync("npm install", {
+    cwd: projectName,
+    stdio: "inherit",
+});
+
 
 /* ---------------- Final Output ---------------- */
 console.log(`
