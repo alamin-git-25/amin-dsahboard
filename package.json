@@ -1,0 +1,12 @@
+{
+  "name": "@amindashboard/cli",
+  "version": "1.0.0",
+  "bin": {
+    "aminDashboard": "index.js"
+  },
+  "type": "module",
+  "files": [
+    "index.js",
+    "template"
+  ]
+}

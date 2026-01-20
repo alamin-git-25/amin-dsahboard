@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@import "tailwindcss";
+* {
+  font-family: "Roboto Condensed", "Tiro Bangla", sans-serif, serif;
+}
+:root {
+  --bg: #f3f4f7;
+  --card: #ffffff;
+  --primary: #155dfc;
+  --border: #e0e4ea;
+  --icon: #0076df;
+  --text: #2e3a48;
+  --muted: #6b7280;
+  --hover: #f8fafc;
+  --bs: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --round: 8px;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --skeleton: hsl(220 10% 85%);
+}
+.dark {
+  --bg: #1e293b; /* dark background */
+  --card: #111827; /* card / modal background */
+  --primary: #155dfc; /* accent color */
+  --border: #374151; /* borders */
+  --icon: #374151;
+  --text: #e5e7eb; /* main text */
+  --muted: #9ca3af; /* muted text */
+  --hover: #1f2937; /* hover background */
+  --bs: 0 2px 6px rgba(0, 0, 0, 0.5); /* darker shadow */
+  --round: 8px; /* border radius same */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --skeleton: hsl(220 10% 30%);
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* hide the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--icon); /* visible thumb color */
+  border-radius: 0px;
+  border: 2px solid transparent; /* add some padding around thumb */
+  background-clip: content-box;
+}
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+.popup {
+  position: relative;
+  background: var(--card) !important;
+  color: var(--text);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1rem 1rem;
+  font-family: "Consolas", monospace;
+  overflow: hidden;
+}
