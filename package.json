@@ -6,6 +6,7 @@
   },
   "type": "module",
   "files": [
-    "index.js"
+    "index.js",
+    "template"
   ]
 }
