@@ -1,40 +1,32 @@
 #!/usr/bin/env node
 
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import { execSync } from "child_process";
 
-/* ---------------- dirname for ESM ---------------- */
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-/* ---------------- CLI args ---------------- */
 const projectName = process.argv[2] || "my-app";
-const targetDir = path.join(process.cwd(), projectName);
+const repo = "https://github.com/alamin-git-25/amin-dashboard-template.git";
 
-/* ---------------- Template path ---------------- */
-const templateDir = path.join(__dirname, "template"); // <--- key fix
+console.log(`🚀 Creating project: ${projectName}`);
+console.log(`📦 Cloning template from GitHub...`);
 
-if (!fs.existsSync(templateDir)) {
-    console.error("❌ Template folder not found:", templateDir);
-    process.exit(1);
-}
+execSync(`git clone ${repo} ${projectName}`, { stdio: "inherit" });
 
-/* ---------------- Copy template ---------------- */
-fs.cpSync(templateDir, targetDir, { recursive: true });
+console.log("✔ Template cloned");
 
-/* ---------------- Rename package.json ---------------- */
-const pkgPath = path.join(targetDir, "package.json");
+/* Rename package.json */
+import fs from "fs";
+import path from "path";
+
+const pkgPath = path.join(process.cwd(), projectName, "package.json");
 if (fs.existsSync(pkgPath)) {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
     pkg.name = projectName;
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+    console.log("✔ package.json updated");
 }
 
-/* ---------------- Install deps ---------------- */
+/* Install dependencies */
 console.log("📦 Installing dependencies...");
-execSync("npm install", { cwd: targetDir, stdio: "inherit" });
+execSync("npm install", { cwd: path.join(process.cwd(), projectName), stdio: "inherit" });
 
 /* ---------------- Final Output ---------------- */
 console.log(`
