@@ -12,7 +12,7 @@ const projectName = process.argv[2] || "amin-dashboard";
 
 console.log("🚀 Creating:", projectName);
 
-const templatePath = path.resolve(__dirname, "template");
+const templatePath = path.resolve(__dirname, "tamplate");
 
 console.log("🔎 CLI location:", __dirname);
 console.log("📁 Template path:", templatePath);
